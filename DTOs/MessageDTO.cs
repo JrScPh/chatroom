@@ -1,6 +1,6 @@
 ﻿namespace ChatroomAPI.DTOs
 {
-    public class MessagesDTO
+    public class MessageDTO
     {
         public int Id { get; set; }
         public string Nickname { get; set; } = string.Empty;

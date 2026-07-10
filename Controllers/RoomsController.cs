@@ -1,12 +1,12 @@
 ﻿using ChatroomAPI.Data;
 using ChatroomAPI.DTOs;
 using ChatroomAPI.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChatroomAPI.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
     public class RoomsController : ControllerBase
@@ -43,7 +43,7 @@ namespace ChatroomAPI.Controllers
                 return NotFound();
             }
             var messages = await _context.Messages.Where(m => m.RoomId == id).OrderBy(m => m.Timestamp).ToListAsync();
-            var messageDtos = messages.Select(m => new MessagesDTO
+            var messageDtos = messages.Select(m => new MessageDTO
             {
                 Id = m.Id,
                 Nickname = m.Nickname,
@@ -69,7 +69,7 @@ namespace ChatroomAPI.Controllers
             };
             _context.Messages.Add(message);
             await _context.SaveChangesAsync();
-            return StatusCode(201, new MessagesDTO
+            return StatusCode(201, new MessageDTO
             {
                 Id = message.Id,
                 Nickname = message.Nickname,
